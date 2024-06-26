@@ -1,16 +1,17 @@
 import './index.css' 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 // import { useAuth } from '../../../Contexts/AuthContext'
 import { signUpUserWithEmailAndPassword, signInWithGoogle } from '../../../config/auth'
+import { getAuthErrorMessage } from '../../../utils/errorHandler.ts'
 
 const Signup = () => {
   // const { userLoggedIn } = useAuth()
   const navigate = useNavigate()
 
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const confirmPasswordRef = useRef()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const [isSigningUp, setIsSigningUp] = useState(false)
   const [error, setError] = useState('')
@@ -19,25 +20,19 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // !!!
-    if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-      setError('Passwords do not match')
-      return
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
     }
 
     setIsSigningUp(true)
     setError('')
     try {
-      await signUpUserWithEmailAndPassword(
-        emailRef.current.value,
-        passwordRef.current.value
-      )
+      await signUpUserWithEmailAndPassword(email, password)
       navigate('/', { replace: true })
     } catch (err) {
-      console.log(err);
-      console.log(err.code);
-      console.log(err.message);
-      setError(err.message)
+      setError(getAuthErrorMessage(err.code))
+    } finally {
       setIsSigningUp(false)
     }
   }
@@ -54,17 +49,35 @@ const Signup = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
-            <input type="email" ref={emailRef} required />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
           <div>
             <label>Password</label>
-            <input type="password" ref={passwordRef} required />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
           <div>
             <label>Confirm password</label>
-            <input type="password" ref={confirmPasswordRef} required />
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
           </div>
-          <button type="submit" disabled={isSigningUp} >Sign up</button>
+          <button
+            type="submit"
+            disabled={isSigningUp}
+          >Sign up</button>
         </form>
       </div>
     </>

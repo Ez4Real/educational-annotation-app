@@ -10,7 +10,7 @@
   --s-add2-color: #90AACB;
 }
 
-html {
+html, #root {
   height: 100%;
 }
 
@@ -18,8 +18,6 @@ body {
   height: 100%;
   margin: 0;
   font-family: 'Lato', 'Noto Sans', 'Helvetica', 'Corbel', sans-serif, 'Helvetica', 'Corbel', sans-serif;
-  /* -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
 }
 
 code {
