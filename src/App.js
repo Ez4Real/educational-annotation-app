@@ -23,7 +23,7 @@ const App = () => {
     },
     {
       path: '*',
-      element: <Login />
+      element: <Main />
     }
   ]
 
@@ -31,7 +31,9 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <div>{ routesElement }</div>
+      <div className='container'>
+        { routesElement }
+      </div>
     </AuthProvider>
   );
 };

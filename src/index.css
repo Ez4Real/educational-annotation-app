@@ -8,19 +8,46 @@
   --s-secondary-color: #F9D5A7;
   --s-add1-color: #FFB085;
   --s-add2-color: #90AACB;
+
+  --body-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --body-color: #1e293b;
+
+  --link-color: rgb(137,87,255);
+  
+  --muted-text-color: rgba(30,41,59,.75);
 }
 
-html, #root {
+@font-face {
+  font-family: 'Satoshi';
+  src: url('assets/fonts/Satoshi.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body,
+#root {
   height: 100%;
+  margin: 0;
+}
+
+*,:before,:after {
+  box-sizing: border-box;
 }
 
 body {
+  color: var(--body-color);
   height: 100%;
   margin: 0;
-  font-family: 'Lato', 'Noto Sans', 'Helvetica', 'Corbel', sans-serif, 'Helvetica', 'Corbel', sans-serif;
+  font-family: var(--body-font-family);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
 }

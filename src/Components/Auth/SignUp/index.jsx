@@ -1,19 +1,112 @@
-import './index.css';
+import './index.css'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { signUpUserWithEmailAndPassword } from '../../../config/auth'
 import BaseAuth from '../BaseAuth'
 
+import { db } from '../../../config/firebase'
+import { doc, setDoc } from "firebase/firestore"
+import { getTimestampFromString } from '../../../utils/formatters.ts'
+
 const Signup = () => {
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [role, setRole] = useState('student')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+
+
+  const saveUserToDatabase = async (user) => {
+    try {
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        role: role,
+        firstName: firstName,
+        lastName: lastName,
+        createdAt: getTimestampFromString(user.metadata.createdAt)
+      })
+    } catch (error) {
+      console.error("Error saving user to Firestore: ", error)
+    }
+  }
+
+  const handleUserSignup = async (email, password) => {
+    const userCredential = await signUpUserWithEmailAndPassword(email, password)
+    await saveUserToDatabase(userCredential.user)
+  }
 
   return (
     <BaseAuth
-      title="Sign up"
+      title="Get started"
       actionType="signup"
-      submitAction={signUpUserWithEmailAndPassword}
+      submitButtonText="Sign up"
+      submitAction={handleUserSignup}
+      switchAuthEl={
+        <>
+          Already have an account?
+          <Link to="/login">
+            <span className='fw-semibold'> Sign in</span>
+          </Link> to your account.
+        </>
+      }
+      confirmPasswordValue={confirmPassword}
+      confirmPasswordFormGroup={
+      <>
+        <div className="form-group w-50">
+          <label className='form-label'>Confirm password</label>
+          <input
+            className="form-control"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+      </>
+      }
+      expandableSignupEl={
+        <>
+          <div className="role-selection-container">
+            <button
+              className={`btn w-50 std-btn ${role === 'student' && 'selected'}`}
+              onClick={() => setRole('student')}
+            >
+              Learner
+            </button>
+            <button
+              className={`btn w-50 tch-btn ${role === 'teacher' && 'selected'}`}
+              onClick={() => setRole('teacher')}
+            >
+              Teacher
+            </button>
+          </div>
+            <div className="form-group w-50">
+              <label className='form-label'>First name</label>
+              <input
+                className="form-control"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group w-50">
+              <label className='form-label'>Last name</label>
+              <input
+                className="form-control"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </div>
+        </>
+      }
     />
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup
 
 
 // import './index.css' 

@@ -1,14 +1,19 @@
+import './index.css'
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { signUpUserWithEmailAndPassword } from '../../../config/auth';
 import { getAuthErrorMessage } from '../../../utils/errorHandler.ts';
 
-const BaseAuth = ({ title, actionType, submitAction }) => {
+const BaseAuth = ({
+  actionType, title, switchAuthEl, submitAction,
+  confirmPasswordValue, confirmPasswordFormGroup,
+  submitButtonText, expandableSignupEl
+   
+}) => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
   const [isSigning, setIsSigning] = useState(false);
   const [error, setError] = useState('');
@@ -18,7 +23,7 @@ const BaseAuth = ({ title, actionType, submitAction }) => {
     setIsSigning(true);
     setError('');
 
-    if (actionType === 'signup' && password !== confirmPassword) {
+    if (actionType === 'signup' && password !== confirmPasswordValue) {
         setError('Passwords do not match');
         return setIsSigning(false);
     }
@@ -35,46 +40,52 @@ const BaseAuth = ({ title, actionType, submitAction }) => {
 
   return (
     <>
-      <div className={`${actionType}-container`}>
-        <div className={`${actionType}-form-container`}>
-          <span>{title}</span>
-          {error && <p className="error">{error}</p>}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                />
+      <div className='auth-page-container'>
+        <div className={`${actionType}-container auth-card-container`}>
+          <div className={`${actionType}-form-container auth-form-container `}>
+            <div className='auth-card-header'>
+              <h1 className='ls-tight h3'>{title}</h1>
+              <div className='text-muted'>{switchAuthEl}</div>
             </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            {actionType === 'signup' && (
-              <div className="form-group">
-                <label>Confirm password</label>
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
+            {error && <p className="error">{error}</p>}
+            <form onSubmit={handleSubmit}>
+              <div className='row'>
+                {expandableSignupEl}
+                <div className="form-group">
+                  <label className='form-label'>Email</label>
+                  <input
+                    className='form-control'
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
+                </div>
+                <div className={`form-group ${actionType === 'signup' ? 'w-50' : ''}`}>
+                  <label className='form-label'>Password</label>
+                  <input
+                    className='form-control'
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                {confirmPasswordFormGroup}
+                <div className="form-group">
+                  <button
+                    className='btn submit-btn'
+                    type="submit"
+                    disabled={isSigning}
+                  >
+                    { submitButtonText }
+                  </button>
+                </div>
               </div>
-          )}
-          <button type="submit" disabled={isSigning}>
-            { title }
-          </button>
-        </form>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
     </>
   );
 };

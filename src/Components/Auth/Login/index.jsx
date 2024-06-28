@@ -1,19 +1,29 @@
-import './index.css';
+import './index.css'
 import { signInUserWithEmailAndPassword } from '../../../config/auth'
 import BaseAuth from '../BaseAuth'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
 
   return (
     <BaseAuth
-      title="Log in"
+      title="Sign in to your account"
       actionType="login"
+      submitButtonText="Log in"
       submitAction={signInUserWithEmailAndPassword}
+      switchAuthEl={
+        <>
+          Don't have an account? 
+          <Link to="/signup">
+            <span className='fw-semibold'> Sign up</span>
+          </Link> now.
+        </>
+      }
     />
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
 
 
 
