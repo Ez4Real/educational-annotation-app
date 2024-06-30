@@ -23,7 +23,8 @@
 }
 
 .btn {
-    padding: .5rem 1rem;
+    /* padding: .5rem 1rem; */
+    padding: .375rem .875rem;
     font-size: 1rem;
     font-weight: var(--x-btn-font-weight);
     line-height: 1.625;

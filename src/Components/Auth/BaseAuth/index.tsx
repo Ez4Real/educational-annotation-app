@@ -1,42 +1,42 @@
 import './index.css'
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import { signUpUserWithEmailAndPassword } from '../../../config/auth';
-import { getAuthErrorMessage } from '../../../utils/errorHandler.ts';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { getAuthErrorMessage } from '../../../utils/errorHandler.ts'
+import { BaseAuthProps } from './index.types.ts'
 
-const BaseAuth = ({
+const BaseAuth: React.FC<BaseAuthProps> = ({
   actionType, title, switchAuthEl, submitAction,
   confirmPasswordValue, confirmPasswordFormGroup,
   submitButtonText, expandableSignupEl
-   
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
 
-  const [isSigning, setIsSigning] = useState(false);
-  const [error, setError] = useState('');
+  const [isSigning, setIsSigning] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSigning(true);
-    setError('');
+    e.preventDefault()
+    setIsSigning(true)
+    setError('')
 
     if (actionType === 'signup' && password !== confirmPasswordValue) {
-        setError('Passwords do not match');
-        return setIsSigning(false);
+        setError('Passwords do not match')
+        setIsSigning(false)
+        return
     }
     
     try {
-      await submitAction(email, password);
+      await submitAction(email, password)
       navigate('/', { replace: true })
     } catch (err) {
-      setError(getAuthErrorMessage(err.code));
+      setError(getAuthErrorMessage(err.code))
     } finally {
-      setIsSigning(false);
+      setIsSigning(false)
     }
-  };
+  }
 
   return (
     <>
@@ -87,7 +87,7 @@ const BaseAuth = ({
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default BaseAuth;
+export default BaseAuth

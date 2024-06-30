@@ -3,8 +3,8 @@ import './App.css';
 import { useRoutes } from 'react-router-dom';
 
 import { AuthProvider } from './Contexts/AuthContext';
-import Login from './Components/Auth/Login/index';
-import Signup from './Components/Auth/SignUp/index';
+import Login from './Components/Auth/Login/index.tsx';
+import Signup from './Components/Auth/SignUp/index.tsx';
 import Main from './Components/Main/index';
 
 const App = () => {

@@ -12,8 +12,8 @@ const Main = () => {
 
     try {
       await signOutUser()
-    } catch (error) {
-      console.error('Error logging out:', error)
+    } catch (err) {
+      console.error('Error logging out:', err)
     }
   }
 
