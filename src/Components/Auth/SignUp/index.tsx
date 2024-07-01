@@ -2,11 +2,13 @@ import './index.css'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Timestamp } from 'firebase/firestore'
-import { signUpUserWithEmailAndPassword } from '../../../config/auth'
+import { signUpUserWithEmailAndPassword } from '../../../config/auth.ts'
 import { UserService } from '../../../services/DatabaseService.ts'
-import { UserData } from './index.type.ts'
+import { UserInfo } from './index.type.ts'
 import { SubmitAction } from '../BaseAuth/index.types.ts'
 import BaseAuth from '../BaseAuth/index.tsx'
+import { UserData } from '../../../types/user.ts'
+
 
 const Signup: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>('')
@@ -18,20 +20,20 @@ const Signup: React.FC = () => {
   const handleUserSignUp: SubmitAction = async (
     email: string,
     password: string,
-    userInfo?: UserData
+    userInfo?: UserInfo
   ) => {
-    const userCredential = await signUpUserWithEmailAndPassword(email, password)
+    const userCredential = await signUpUserWithEmailAndPassword(email, password);
     const { uid, email: userEmail } = userCredential.user;
 
-    const data = {
-      'uid': uid,
-      'email': userEmail,
-      'createdAt': Timestamp.now(),
-      ...userInfo
-    }
-    
-    await UserService.create(data)
-  }
+    const userData: UserData = {
+      uid: uid,
+      email: userEmail,
+      createdAt: Timestamp.now(),
+      ...userInfo,
+    };
+
+    await UserService.create(userData);
+  };
 
   return (
     <BaseAuth
@@ -39,8 +41,8 @@ const Signup: React.FC = () => {
       actionType="signup"
       submitButtonText="Sign up"
       submitAction={
-        (email: string, password: string, userInfo?: UserData) =>
-        handleUserSignUp(email, password, userInfo)
+        (email: string, password: string) =>
+        handleUserSignUp(email, password, {role, firstName, lastName})
       }
       switchAuthEl={
         <>

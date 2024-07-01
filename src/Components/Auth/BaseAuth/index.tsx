@@ -13,30 +13,29 @@ const BaseAuth: React.FC<BaseAuthProps> = ({
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-
   const [isSigning, setIsSigning] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSigning(true)
-    setError('')
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSigning(true);
+    setError('');
 
     if (actionType === 'signup' && password !== confirmPasswordValue) {
-        setError('Passwords do not match')
-        setIsSigning(false)
-        return
+      setError('Passwords do not match');
+      setIsSigning(false);
+      return;
     }
-    
+
     try {
-      await submitAction(email, password)
-      navigate('/', { replace: true })
+      await submitAction(email, password);
+      navigate('/', { replace: true });
     } catch (err) {
-      setError(getAuthErrorMessage(err.code))
+      setError(getAuthErrorMessage(err.code));
     } finally {
-      setIsSigning(false)
+      setIsSigning(false);
     }
-  }
+  };
 
   return (
     <>

@@ -1,6 +1,6 @@
 import './index.css'
 import { useAuth } from '../../Contexts/AuthContext'
-import { signOutUser } from '../../config/auth'
+import { signOutUser } from '../../config/auth.ts'
 import { Navigate } from 'react-router-dom'
 
 const Main = () => {

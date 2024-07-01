@@ -1,11 +1,10 @@
-import './index.css'
-import React from 'react'
-import { signInUserWithEmailAndPassword } from '../../../config/auth'
-import BaseAuth from '../BaseAuth/index.tsx'
-import { Link } from 'react-router-dom'
+import './index.css';
+import React from 'react';
+import BaseAuth from '../BaseAuth/index.tsx';
+import { Link } from 'react-router-dom';
+import { signInUserWithEmailAndPassword } from '../../../config/auth.ts';
 
 const Login: React.FC = () => {
-
   return (
     <BaseAuth
       title="Sign in to your account"
@@ -14,14 +13,15 @@ const Login: React.FC = () => {
       submitAction={signInUserWithEmailAndPassword}
       switchAuthEl={
         <>
-          Don't have an account? 
+          Don't have an account?{' '}
           <Link to="/signup">
-            <span className='fw-semibold'> Sign up</span>
-          </Link> now.
+            <span className="fw-semibold">Sign up</span>
+          </Link>{' '}
+          now.
         </>
       }
     />
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
