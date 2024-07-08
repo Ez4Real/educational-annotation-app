@@ -10,7 +10,7 @@ export type SubmitAction = (
 ) => Promise<UserCredential | void>;
 
 export interface BaseAuthProps {
-  actionType: 'login' | 'signup'; // Adjusted to be more specific
+  actionType: 'login' | 'signup';
   title: string;
   switchAuthEl: ReactNode;
   submitAction: SubmitAction;

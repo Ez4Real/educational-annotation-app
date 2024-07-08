@@ -1,5 +1,5 @@
 export interface UserInfo {
-    role: string,
+    role: 'student' | 'teacher',
     firstName: string,
     lastName: string
 }

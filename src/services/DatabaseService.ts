@@ -7,6 +7,8 @@ import {
   addDoc, updateDoc, deleteDoc,
   DocumentReference,
   DocumentData,
+  query,
+  where,
 } from "firebase/firestore"
 
 class DatabaseService<T> {
@@ -31,13 +33,14 @@ class DatabaseService<T> {
   }
 
   
-  async getOne(id: string): Promise<T | undefined> {
-    if (!id) return 
-    
+  async getOneByUid(id: string): Promise<T | void> {
     try {
-      const docRef = doc(this.collection, id)
-      const snapshot = await getDoc(docRef)
-      return snapshot.data()
+      const querySnapshot = await getDocs(
+        query(this.collection, where("uid", "==", id))
+      )
+
+      const userDoc = querySnapshot.docs[0]
+      return { docId: userDoc.id, ...userDoc.data() } as T
     } catch (err) {
       console.error(err)
       throw err
@@ -45,7 +48,7 @@ class DatabaseService<T> {
   }
   
   
-  async getReference(documentReference: DocumentReference): Promise<DocumentData | undefined> {
+  async getReference(documentReference: DocumentReference): Promise<DocumentData | void> {
     const snapshot = await getDoc(documentReference)
     const data = snapshot.data()
 
@@ -94,7 +97,7 @@ class DatabaseService<T> {
 export const UserService = new DatabaseService("users")
 
 
-// export const UserCreate = async (user: User , userData: UserData | undefined) => {
+// export const UserCreate = async (user: User , userData: UserData | void) => {
 //   try {
 //     await setDoc(doc(db, "users", user.uid), {
 //       uid: user.uid,
@@ -102,6 +105,15 @@ export const UserService = new DatabaseService("users")
 //       ...userData,
 //       createdAt: Timestamp.now()
 //     })
+//   } catch (err) {
+//     console.error("Error saving user to Firestore: ", err)
+//   }
+// }
+
+
+// export const UserGet = async (id: string) => {
+//   try {
+//     await getDoc(doc(db, "users", id))
 //   } catch (err) {
 //     console.error("Error saving user to Firestore: ", err)
 //   }

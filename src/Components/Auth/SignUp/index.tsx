@@ -12,7 +12,7 @@ import { UserData } from '../../../types/user.ts'
 
 const Signup: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>('')
-  const [role, setRole] = useState<string>('student')
+  const [role, setRole] = useState<'student' | 'teacher'>('student')
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
 
