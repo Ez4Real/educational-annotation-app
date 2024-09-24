@@ -63,7 +63,6 @@ const TeacherGrades = () => {
   return (
     <div className="grades-page">
       <h1>Student Grades</h1>
-
       <div className="quiz-selection">
         <select 
           id="quizSelect"
