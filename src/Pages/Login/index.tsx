@@ -1,8 +1,8 @@
 import './index.css';
 import React from 'react';
-import BaseAuth from '../BaseAuth/index.tsx';
+import BaseAuth from '../../Components/Auth/BaseAuth/index.tsx';
 import { Link } from 'react-router-dom';
-import { signInUserWithEmailAndPassword } from '../../../config/auth.ts';
+import { signInUserWithEmailAndPassword } from '../../config/auth.ts';
 
 const Login: React.FC = () => {
   return (

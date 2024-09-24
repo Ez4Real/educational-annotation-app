@@ -2,12 +2,12 @@ import './index.css'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Timestamp } from 'firebase/firestore'
-import { signUpUserWithEmailAndPassword } from '../../../config/auth.ts'
-import { UserService } from '../../../services/DatabaseService.ts'
+import { signUpUserWithEmailAndPassword } from '../../config/auth.ts'
+import { UserService } from '../../services/DatabaseService.ts'
 import { UserInfo } from './index.type.ts'
-import { SubmitAction } from '../BaseAuth/index.types.ts'
-import BaseAuth from '../BaseAuth/index.tsx'
-import { UserData } from '../../../types/user.ts'
+import { SubmitAction } from '../../Components/Auth/BaseAuth/index.types.ts'
+import BaseAuth from '../../Components/Auth/BaseAuth/index.tsx'
+import { UserData } from '../../types/user.ts'
 
 
 const Signup: React.FC = () => {
@@ -69,13 +69,13 @@ const Signup: React.FC = () => {
         <>
           <div className="role-selection-container">
             <button
-              className={`btn w-50 std-btn ${role === 'student' && 'selected'}`}
+              className={`choose-role-btn w-50 std-btn ${role === 'student' && 'selected'}`}
               onClick={() => setRole('student')}
             >
               Student
             </button>
             <button
-              className={`btn w-50 tch-btn ${role === 'teacher' && 'selected'}`}
+              className={`choose-role-btn w-50 tch-btn ${role === 'teacher' && 'selected'}`}
               onClick={() => setRole('teacher')}
             >
               Teacher

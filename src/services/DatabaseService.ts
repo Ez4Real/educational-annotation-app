@@ -39,26 +39,49 @@ class DatabaseService<T> {
         query(this.collection, where("uid", "==", id))
       )
 
-      const userDoc = querySnapshot.docs[0]
-      return { docId: userDoc.id, ...userDoc.data() } as T
+      const doc = querySnapshot.docs[0]
+      return { docId: doc.id, ...doc.data() } as T
     } catch (err) {
       console.error(err)
       throw err
     }
   }
-  
-  
-  async getReference(documentReference: DocumentReference): Promise<DocumentData | void> {
-    const snapshot = await getDoc(documentReference)
-    const data = snapshot.data()
 
-    if (data && documentReference.id) {
-      return { ...data, uid: documentReference.id }
+  
+  async getOneByAccessKey(accessKey: string) {
+    try {
+      const querySnapshot = await getDocs(
+        query(this.collection, where("access_key", "==", accessKey))
+      )
+
+      const doc = querySnapshot.docs[0]
+      return { docId: doc.id, ...doc.data() } as T
+    } catch (err) {
+      console.error(err)
     }
+  }
+  
 
-    return data
+  async getReferenceById(id: string): Promise<DocumentReference<T>> {
+    try {
+      return doc(this.collection, id)
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
   }
 
+  async getDocumentById(id: string): Promise<T | void> {
+    try {
+      const docRef = doc(this.collection, id);
+      const docSnap = await getDoc(docRef);  
+      return { docId: docSnap.id, ...docSnap.data() } as T
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+  
   
   async create(data: T): Promise<DocumentReference<T>> {
     try {
@@ -90,31 +113,9 @@ class DatabaseService<T> {
       throw err
     }
   }
-
 }
 
+const UserService = new DatabaseService("users")
+const QuizService = new DatabaseService("quizzes")
 
-export const UserService = new DatabaseService("users")
-
-
-// export const UserCreate = async (user: User , userData: UserData | void) => {
-//   try {
-//     await setDoc(doc(db, "users", user.uid), {
-//       uid: user.uid,
-//       email: user.email,
-//       ...userData,
-//       createdAt: Timestamp.now()
-//     })
-//   } catch (err) {
-//     console.error("Error saving user to Firestore: ", err)
-//   }
-// }
-
-
-// export const UserGet = async (id: string) => {
-//   try {
-//     await getDoc(doc(db, "users", id))
-//   } catch (err) {
-//     console.error("Error saving user to Firestore: ", err)
-//   }
-// }
+export { UserService, QuizService };

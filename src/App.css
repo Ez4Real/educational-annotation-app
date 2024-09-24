@@ -22,18 +22,6 @@
     font-weight: 500;
 }
 
-.btn {
-    /* padding: .5rem 1rem; */
-    padding: .375rem .875rem;
-    font-size: 1rem;
-    font-weight: var(--x-btn-font-weight);
-    line-height: 1.625;
-    cursor: pointer;
-    border: 1px solid #0f172a;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .075);
-    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
 .w-50 {
     width: 50% !important;
 }

@@ -73,7 +73,7 @@ const BaseAuth: React.FC<BaseAuthProps> = ({
                 {confirmPasswordFormGroup}
                 <div className="form-group">
                   <button
-                    className='btn submit-btn'
+                    className='lng-btn submit-btn'
                     type="submit"
                     disabled={isSigning}
                   >

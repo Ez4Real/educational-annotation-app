@@ -1,18 +1,17 @@
-// import logo from './logo.svg';
 import './App.css';
-import { useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 
 import { AuthProvider } from './Contexts/AuthContext';
-import Login from './Components/Auth/Login/index.tsx';
-import Signup from './Components/Auth/SignUp/index.tsx';
-import Main from './Components/Main/index';
+import Login from './Pages/Login/index.tsx';
+import Signup from './Pages/SignUp/index.tsx';
+import TeacherPage from './Pages/TeacherPage/index.jsx';
+import StudentPage from './Pages/StudentPage/index.jsx';
+import ProtectedRoute from './Routes/ProtectedRoute.jsx';
+import RoleBasedRedirect from './Routes/RoleBasedRoute.jsx';
+import TeacherGrades from './Pages/StudentsGrades/index.jsx';
 
 const App = () => {
   const routes = [
-    {
-      path: '/',
-      element: <Main />
-    },
     {
       path: '/login',
       element: <Login />
@@ -22,9 +21,29 @@ const App = () => {
       element: <Signup />
     },
     {
+      path: '/',
+      element: <RoleBasedRedirect />,
+    },
+    {
+      path: '/t',
+      element: <ProtectedRoute allowedRoles={['teacher']} />,
+      children: [
+        {index: true, element: (<TeacherPage />)},
+        {path: 'gradebook', element: (<TeacherGrades />)},
+      ],
+    },
+    {
+      path: '/s',
+      element: <ProtectedRoute allowedRoles={['student']} />,
+      children: [
+        {index: true, element: (<StudentPage />)},
+      ],
+    },
+    
+    {
       path: '*',
-      element: <Main />
-    }
+      element: <Navigate to="/" replace />,
+    },
   ]
 
   const routesElement = useRoutes(routes);

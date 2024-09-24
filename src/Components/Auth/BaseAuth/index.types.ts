@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { UserInfo } from '../SignUp/index.type'
+import { UserInfo } from '../../../Pages/SignUp/index.type'
 import { UserCredential } from 'firebase/auth'
 
 

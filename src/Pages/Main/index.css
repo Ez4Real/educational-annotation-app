@@ -1,0 +1,49 @@
+.Main {
+    height: 100%;
+    overflow: hidden;
+
+    display: flex;
+    transition: margin-left 0.5s ease;
+}
+
+.content {
+    width: 100%;
+    overflow: auto;
+
+    background: rgb(248, 250, 252);
+    transition: margin-left 0.5s ease;
+    margin-left: -95px;
+}
+
+.content-shift {
+    margin: 0;
+}
+
+.panel {
+    background: #f1f3f5;
+    display: flex;
+    padding: .5rem;
+    align-items: center;
+    height: 9rem;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.btn {
+    border: 1px solid #cbd5e1;
+    padding: .2rem .7rem;
+    line-height: 1.625;
+    border-radius: .375rem;
+    box-shadow: 0 1px 1px rgba(0,0,0,.075);
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+  
+  .btn:active {
+    background-color: #f1f5f9;
+    box-shadow: 0 0 0 0 transparent;
+  }
+  .btn:hover {
+    background-color: #e2e8f0; 
+  }

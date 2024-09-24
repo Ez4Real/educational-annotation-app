@@ -1,0 +1,24 @@
+.uploadNewQuizz {
+    width: 8rem;
+    display: inline-block;
+    padding: .5rem;
+    cursor: pointer;
+    background-color: #2228da;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.5s ease;
+}
+
+.uploadNewQuizz:hover {
+    background-color: rgb(42, 196, 168);
+    color: black;
+}
+
+.uploadNewQuizz i {
+    margin-right: 10px;
+}
+
+input[type="file"] {
+    display: none;
+}
