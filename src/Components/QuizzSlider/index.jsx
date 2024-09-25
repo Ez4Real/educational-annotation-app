@@ -84,9 +84,14 @@ const QuizzSlider = ({ quizRefs, setDocument }) => {
                   <p className="slider-card-date">
                     {new Date(quiz.joinedAt.seconds * 1000).toLocaleDateString()}
                   </p>
-                  <p className={`quiz-score ${quiz.attempted ? getScoreColor(quiz.score) : ''}`}>
-                    {userData.role === 'student' && quiz.attempted ? <>Score: {quiz.score}%</> : <>Not attempted</>}
-                  </p>
+                  {userData.role === 'student' 
+                    ? (
+                      <p className={`quiz-score ${quiz.attempted ? getScoreColor(quiz.score) : ''}`}>
+                        {quiz.attempted ? <>Score: {quiz.score}%</> : <>Not attempted</>}
+                      </p>
+                    ) 
+                    : null
+                  }
                 </div>
                 {userData.role === 'teacher' &&<button className="copy-button" onClick={() => copyAccessKey(quizData[id].access_key)}>
                   Copy Access Key
